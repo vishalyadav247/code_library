@@ -1,0 +1,451 @@
+// html for instant search clerk design
+<div class="searchWrapper">
+<div class="p-lg">
+  <div data-name="container3" id="I2M3KCwF" class="clerk-design-component-I2M3KCwF undefined">
+    <div data-group="group1" data-container="true">
+      {% for item in products %}{% if loop.index0 >= 0 and loop.index0 
+      <= 9 %}
+      <div data-name="container1" id="ATGbfkg4" class="clerk-design-component-ATGbfkg4 designs-card">
+        <div data-group="group1" data-container="true">
+          <a href="{{item.url}}" id="8OXEsfd9" class="clerk-design-component-8OXEsfd9 ">
+            <img src="{{item.image}}" />
+          </a>
+          <div data-name="container1" id="4AWETm7W" class="clerk-design-component-4AWETm7W ">
+            <div data-group="group1" data-container="true">
+              <div data-name="container1" id="GMZSHF34" class="clerk-design-component-GMZSHF34 ">
+                <div data-group="group1" data-container="true">
+                  <div id="oGUTQpll" class="clerk-design-component-oGUTQpll undefined" >
+                    <p>
+                      <a href="{{item.url}}">{{item.name}}</a>
+                    </p>
+                  </div>
+                  {% if item.manufacturer %}
+                  <div id="H5TfmJwB" class="clerk-design-component-H5TfmJwB undefined" >
+                    <p>
+                      {{item.manufacturer}}
+                    </p>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              <div data-name="container1" id="kE0X0pEH" class="clerk-design-component-kE0X0pEH ">
+                <div data-group="group1" data-container="true">
+                  {% if item.on_sale == true %}
+                  <div id="Jd3Cz2H3" class="clerk-design-component-Jd3Cz2H3 ">
+                    <span class="clerk-before-price">
+                      £
+                    </span>
+                    <span class="clerk-price">
+                      {{item.list_price | money 2 "." "."}}
+                    </span>
+                  </div>
+                  {% endif %}
+                  <div id="n14RTGv9" class="clerk-design-component-n14RTGv9 ">
+                    <span class="clerk-before-price">
+                      £
+                    </span>
+                    <span class="clerk-price">
+                      {{item.price | money 2 "." "."}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>{% endif %}{% endfor %}
+    </div>
+  </div>
+  <button id="meRJqi1J" class="clerk-design-component-meRJqi1J designs-card" onclick="Clerk('content', '#{{ content.id }}', 'more', 20);">
+        Show all results
+      </button>
+</div>
+
+</div>
+
+
+
+
+
+// css for instant search clerk design
+[class^="clerk-design-component"] {
+  box-sizing: border-box;
+}
+[class^="clerk-design-component"] > * {
+  box-sizing: border-box;
+}
+.clerk-design-component-I2M3KCwF {
+  padding: 0px 0px 0px 0px;
+  margin:0px 0px 0px 0px;
+  background-color: #ffffff;
+  border-radius:0px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+}
+.clerk-design-component-I2M3KCwF > div:first-child {
+  text-align: left;
+}
+.clerk-design-component-ATGbfkg4 {
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  margin:0px 0px 0px 0px;
+  position: relative;
+  overflow: hidden;
+  width: auto;
+  height: auto;
+}
+.clerk-design-component-ATGbfkg4 > div:first-child {
+  box-sizing: border-box;
+  padding: 10px 10px 10px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: start;
+  align-content: start;
+  justify-content: start;
+}
+@media screen and (max-width: 896px) {
+  .clerk-design-component-ATGbfkg4 > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: start;
+    align-content: start;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 448px) {
+  .clerk-design-component-ATGbfkg4 > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: start;
+    align-content: start;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+.clerk-design-component-8OXEsfd9 {
+  display: block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: 0px 0px 0px 0px;
+  overflow: hidden;
+}
+.clerk-design-component-8OXEsfd9 > img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  pointer-events: none;
+  transition: transform .3s ease-in-out;
+}
+.clerk-design-component-8OXEsfd9:hover > img {
+  transform: scale(0.8);
+}
+.clerk-design-component-4AWETm7W {
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  margin:0px 0px 0px 0px;
+  position: relative;
+  overflow: hidden;
+  width: auto;
+  height: auto;
+  flex: 1 1 0;
+}
+.clerk-design-component-4AWETm7W > div:first-child {
+  box-sizing: border-box;
+  padding: 0 0 0 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: start;
+  align-content: start;
+  justify-content: start;
+}
+@media screen and (max-width: 896px) {
+  .clerk-design-component-4AWETm7W > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: start;
+    align-content: start;
+    justify-content: start;
+  }
+}
+@media screen and (max-width: 448px) {
+  .clerk-design-component-4AWETm7W > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: start;
+    align-content: start;
+    justify-content: start;
+  }
+}
+.clerk-design-component-GMZSHF34 {
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  margin:0px 0px 0px 0px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+}
+.clerk-design-component-GMZSHF34 > div:first-child {
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: start;
+  gap: 20px;
+}
+@media screen and (max-width: 896px) {
+  .clerk-design-component-GMZSHF34 > div:first-child {
+    box-sizing: border-box;
+    padding: 0px 0px 0px 0px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 448px) {
+  .clerk-design-component-GMZSHF34 > div:first-child {
+    box-sizing: border-box;
+    padding: 0px 0px 0px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+.clerk-design-component-oGUTQpll {
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-pack: flex-start;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+  width: auto;
+  height: auto;
+  margin: 0px 0px 0px 0px;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  padding: 0px 0px 0px 0px;
+  word-break: break-word;
+  text-decoration: none;
+}
+.clerk-design-component-oGUTQpll >* {
+  word-break: break-word;
+  white-space: normal;
+  margin: 0px;
+  width: auto;
+  text-align: left;
+  font-size: 16px;
+  color: #666666;
+  font-weight: bold;
+  font-style: normal;
+  text-decoration:  ;
+  white-space: nowrap;
+}
+.clerk-design-component-H5TfmJwB {
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-pack: flex-start;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+  width: auto;
+  height: auto;
+  margin: 0px 0px 0px 0px;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  padding: 0px 0px 0px 0px;
+  word-break: break-word;
+  text-decoration: none;
+}
+.clerk-design-component-H5TfmJwB >* {
+  word-break: break-word;
+  white-space: normal;
+  margin: 0px;
+  width: auto;
+  text-align: left;
+  font-size: 12px;
+  color: #999999;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration:  ;
+  text-transform: uppercase;
+}
+.clerk-design-component-kE0X0pEH {
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  margin:0px 0px 0px 0px;
+  position: relative;
+  overflow: hidden;
+  width: auto;
+  height: auto;
+}
+.clerk-design-component-kE0X0pEH > div:first-child {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: start;
+  gap: 10px;
+}
+@media screen and (max-width: 896px) {
+  .clerk-design-component-kE0X0pEH > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 0px 0px 0px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 448px) {
+  .clerk-design-component-kE0X0pEH > div:first-child {
+    box-sizing: border-box;
+    padding: 5px 0px 0px 0px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+.clerk-design-component-Jd3Cz2H3 {
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-pack: flex-start;
+  justify-content: flex-start;
+  align-items: baseline;
+  position: relative;
+  width: 100%;
+  margin:0px 0px 0px 0px;
+}
+.clerk-design-component-Jd3Cz2H3 > .clerk-price {
+  font-size: 14px;
+  color: #80d8ff;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration:  line-through;
+}
+.clerk-design-component-Jd3Cz2H3 > .clerk-before-price {
+  font-size: 14px;
+  color: #80d8ff;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration:  line-through;
+}
+.clerk-design-component-Jd3Cz2H3 > .clerk-after-price {
+  font-size: 14px;
+  color: #475569;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration:  ;
+}
+.clerk-design-component-n14RTGv9 {
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-pack: flex-start;
+  justify-content: flex-start;
+  align-items: baseline;
+  position: relative;
+  width: 100%;
+  margin:0px 0px 0px 0px;
+}
+.clerk-design-component-n14RTGv9 > .clerk-price {
+  font-size: 16px;
+  color: #666666;
+  font-weight:500;
+  font-style: normal;
+  text-decoration:  ;
+}
+.clerk-design-component-n14RTGv9 > .clerk-before-price {
+  font-size: 16px;
+  color: #666666;
+  font-weight: 500;
+  font-style: normal;
+  text-decoration:  ;
+}
+.clerk-design-component-n14RTGv9 > .clerk-after-price {
+  font-size: 14px;
+  color: #475569;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration:  ;
+}
+.clerk-design-component-meRJqi1J {
+  padding: 24px 16px 24px 16px;
+  background-color: #00000000;
+  font-size: 15px;
+  color: #716684;
+  font-weight: bold;
+  font-style: normal;
+  text-decoration:  ;
+  border-style: solid;
+  border-radius:0px;
+  border-width:0px;
+  border-color:#CBD5E1;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  height: auto;
+  margin:0px 0px 0px 0px;
+}
+.clerk-design-component-meRJqi1J:focus {
+  outline: none;
+}

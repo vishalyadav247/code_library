@@ -1,0 +1,645 @@
+// html
+<div class="p-lg">
+  <div data-name="container1" id="vZlTBuno" class="clerk-design-component-vZlTBuno">
+    <div data-group="group1" data-container="true">
+      {% if query.length > 0 %}
+      <div id="nj0N4lrx" class="clerk-design-component-nj0N4lrx " >
+        <p>
+          Search results for "{{query}}"
+        </p>
+      </div>
+      {% endif %}
+      <div data-name="container1" id="8NPY3m0l" class="clerk-design-component-8NPY3m0l designs-background">
+        <div data-group="group1" data-container="true">
+          <div data-name="loop1" id="CpXL33GZ" class="clerk-design-component-CpXL33GZ undefined">
+            <div data-group="group1" data-container="true">
+              {% for item in products %}
+              <div>
+                <div data-name="container1" id="7PubvKRN" class="clerk-design-component-7PubvKRN designs-card">
+                  <div data-group="group1" data-container="true">
+                    {% if item.on_sale == true %}
+                    <div id="qEBcFmvH" class="clerk-design-component-qEBcFmvH ">
+                      ON SALE
+                    </div>
+                    {% endif %}
+                    <a href="{{item.url}}" id="LJr6SrpH" class="clerk-design-component-LJr6SrpH ">
+                      <img src="{{item.image}}" />
+                    </a>
+                    <div id="c44nbU7E" class="clerk-design-component-c44nbU7E clerk-color-variants-component">
+                      {% for attribute in item.color_codes %}{% if loop.index0 >= 0 and loop.index0 
+                      <= 9 %}
+                      <div style="background-color: {{attribute}};">
+                        &nbsp;
+                      </div>{% endif %}{% endfor %}
+                    </div>
+                    {% if !item.manufacturer %}
+                    <div id="EWVzKoT8" class="clerk-design-component-EWVzKoT8 undefined customSku" >
+                      <p class="sku">
+                        {{item.sku}}
+                      </p>
+                    </div>
+                    {% endif %}
+                   
+                    <div data-name="container1" id="MUwX6eIv" class="clerk-design-component-MUwX6eIv ">
+                      <div data-group="group1" data-container="true">
+                        {% if item.on_sale == true %}
+                        <div id="f9UHI1jV" class="clerk-design-component-f9UHI1jV designs-price">
+                          <span class="clerk-before-price">
+                            £
+                          </span>
+                          <span class="clerk-price">
+                            {{item.list_price | money 2 "." "."}}
+                          </span>
+                        </div>
+                        {% endif %}
+                        <div id="TvhzjYdz" class="clerk-design-component-TvhzjYdz designs-price">
+                          <span class="clerk-before-price">
+                            £
+                          </span>
+                          <span class="clerk-price">
+                            {{item.price | money 2 "." ","}}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                     <div id="6JjOXbq6" class="clerk-design-component-6JjOXbq6 undefined" >
+                      <p class="prodTitle">
+                        {{item.name}}
+                      </p>
+                    </div>
+                    <div data-name="container1" id="7FiNQo02" class="clerk-design-component-7FiNQo02 ">
+                      <div data-group="group1" data-container="true" class="viewBtn">
+                        <a id="4cwCZho3" class="clerk-design-component-4cwCZho3 undefined" href="{{item.url}}">
+                          <p>
+                            View Item
+                          </p>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if count > products.length %}
+      <div data-name="container1" id="PbS7yuoO" class="clerk-design-component-PbS7yuoO ">
+        <div data-group="group1" data-container="true">
+          <button id="dCF8Lsoy" class="clerk-design-component-dCF8Lsoy loadMore" onclick="Clerk('content', '#{{ content.id }}', 'more', 40);">
+            Load More
+          </button>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+// css
+.prodTitle{
+    
+}
+
+[class^="clerk-design-component"] {
+  box-sizing: border-box;
+}
+[class^="clerk-design-component"] > * {
+  box-sizing: border-box;
+}
+.clerk-design-component-vZlTBuno {
+  padding: 0px 0px 0px 0px;
+  background-color: #ffffff;
+  border-radius:0px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+.clerk-design-component-vZlTBuno > div:first-child {
+  width: 100%;
+  text-align: left;
+}
+.clerk-design-component-nj0N4lrx {
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  width: auto;
+  height: auto;
+  margin: 0px 0px 12px 0px;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  padding: 0px 0px 0px 0px;
+  word-break: break-word;
+  text-decoration: none;
+}
+.clerk-design-component-nj0N4lrx >* {
+  word-break: break-word;
+  white-space: normal;
+  margin: 0px;
+  width: auto;
+  text-align: center;
+  font-size: 18px;
+  color: #475569;
+  font-weight: bold;
+  font-style: normal;
+  text-decoration:  ;
+}
+.clerk-design-component-8NPY3m0l {
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  margin:0px 0px 0px 0px;
+  position: relative;
+  overflow: hidden;
+  width: auto;
+  height: auto;
+}
+.clerk-design-component-8NPY3m0l > div:first-child {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: start;
+  gap: 10px;
+}
+@media screen and (max-width: 896px) {
+  .clerk-design-component-8NPY3m0l > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: start;
+    align-content: start;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 448px) {
+  .clerk-design-component-8NPY3m0l > div:first-child {
+    box-sizing: border-box;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+.clerk-design-component-CpXL33GZ > div {
+  width: 100%;
+  display: grid;
+  column-gap: 15px;
+  row-gap: 15px;
+  position: relative;
+}
+.clerk-design-component-CpXL33GZ > div {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media screen and (max-width: 896px) {
+  .clerk-design-component-CpXL33GZ > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media screen and (max-width: 448px) {
+  .clerk-design-component-CpXL33GZ > div {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+.clerk-design-component-7PubvKRN {
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-style: solid;
+  border-width:1px;
+  border-color:#d3d3d3;
+  border-radius:0px;
+  margin:0px 0px 0px 0px;
+  position: relative;
+  overflow: hidden;
+  width: auto;
+  height: auto;
+}
+.clerk-design-component-7PubvKRN > div:first-child {
+  box-sizing: border-box;
+  padding: 10px 10px 10px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: start;
+  align-content: start;
+  justify-content: start;
+  gap: 0px;
+}
+@media screen and (max-width: 896px) {
+  .clerk-design-component-7PubvKRN > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: start;
+    align-content: start;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 448px) {
+  .clerk-design-component-7PubvKRN > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: start;
+    align-content: start;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+.clerk-design-component-qEBcFmvH {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: bold;
+  font-style: normal;
+  text-decoration:  ;
+  padding: 6px 12px 6px 12px;
+  background-color: #000000;
+  border-radius:4px;
+}
+.clerk-design-component-LJr6SrpH {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 250px;
+  margin: 0px 0px 0px 0px;
+  overflow: hidden;
+}
+.clerk-design-component-LJr6SrpH > img {
+  width: 100%;
+  height: 250px;
+  object-fit: contain;
+  pointer-events: none;
+  transition: transform .3s ease-in-out;
+}
+.clerk-design-component-LJr6SrpH:hover > img {
+  transform: scale(0.8);
+}
+.clerk-design-component-c44nbU7E {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+  row-gap: 0px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.clerk-design-component-c44nbU7E > div {
+  width: 12px;
+  height: 12px;
+  border-radius:0px;
+}
+.clerk-design-component-EWVzKoT8 {
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-pack: flex-start;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+  width: auto;
+  height: auto;
+  margin: 8px 0px 0px 0px;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  padding: 0px 0px 0px 0px;
+  word-break: break-word;
+  text-decoration: none;
+}
+.clerk-design-component-EWVzKoT8 >* {
+  word-break: break-word;
+  white-space: normal;
+  margin: 0px;
+  width: auto;
+  text-align: left;
+  font-size: 12px;
+  color: #999999;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration:  ;
+  text-transform: uppercase;
+}
+.clerk-design-component-6JjOXbq6 {
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-pack: flex-start;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+  width: auto;
+  height: auto;
+  margin: 17px 0px 0px 0px;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  padding: 0px 0px 0px 0px;
+  word-break: break-word;
+  text-decoration: none;
+  height:69px;
+  overflow:hidden;
+}
+.clerk-design-component-6JjOXbq6 >* {
+  word-break: break-word;
+  white-space: normal;
+  margin: 0px;
+  width: auto;
+  text-align: left;
+  font-size: 16px;
+  color: #828080;
+  font-weight: bold;
+  font-style: normal;
+  text-decoration:  ;
+}
+.clerk-design-component-MUwX6eIv {
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  margin:0px 0px 0px 0px;
+  position: relative;
+  overflow: hidden;
+  width: auto;
+  height: auto;
+}
+.clerk-design-component-MUwX6eIv > div:first-child {
+  box-sizing: border-box;
+  padding: 10px 0px 0px 0px;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: start;
+  gap: 10px;
+}
+@media screen and (max-width: 896px) {
+  .clerk-design-component-MUwX6eIv > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 0px 0px 0px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 448px) {
+  .clerk-design-component-MUwX6eIv > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 0px 0px 0px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+.clerk-design-component-f9UHI1jV {
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-pack: flex-start;
+  justify-content: flex-start;
+  align-items: baseline;
+  position: relative;
+  width: 100%;
+  margin:8px 0px 0px 0px;
+}
+.clerk-design-component-f9UHI1jV > .clerk-price {
+  font-size: 14px;
+  color: #929292;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration:  line-through;
+}
+.clerk-design-component-f9UHI1jV > .clerk-before-price {
+  font-size: 14px;
+  color: #929292;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration:  line-through;
+}
+.clerk-design-component-f9UHI1jV > .clerk-after-price {
+  font-size: 14px;
+  color: #475569;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration:  ;
+}
+.clerk-design-component-TvhzjYdz {
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-pack: flex-start;
+  justify-content: flex-start;
+  align-items: baseline;
+  position: relative;
+  width: 100%;
+  margin:8px 0px 0px 0px;
+}
+.clerk-design-component-TvhzjYdz > .clerk-price {
+  color: #f08f35;
+    font-weight: 700;
+    font-size: 20px;
+    font-style: normal;
+}
+.clerk-design-component-TvhzjYdz > .clerk-before-price {
+    color: #f08f35;
+    font-weight: 700;
+    font-size: 20px;
+    font-style: normal;
+}
+.clerk-design-component-TvhzjYdz > .clerk-after-price {
+  font-size: 14px;
+  color: #475569;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration:  ;
+}
+.clerk-design-component-7FiNQo02 {
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  margin:0px 0px 0px 0px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+}
+.clerk-design-component-7FiNQo02 > div:first-child {
+  box-sizing: border-box;
+  padding: 10px 10px 10px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: start;
+  align-content: start;
+  justify-content: start;
+  gap: 10px;
+}
+@media screen and (max-width: 896px) {
+  .clerk-design-component-7FiNQo02 > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: start;
+    align-content: start;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 448px) {
+  .clerk-design-component-7FiNQo02 > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: start;
+    align-content: start;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+.clerk-design-component-4cwCZho3 {
+  display: flex;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  padding: 0px 0px 0px 0px;
+  word-break: break-word;
+  text-decoration: none;
+}
+.clerk-design-component-4cwCZho3 >* {
+  word-break: break-word;
+  white-space: normal;
+  margin: 0px;
+  width: 100%;
+  text-align: center;
+}
+.clerk-design-component-PbS7yuoO {
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-style: solid;
+  border-width:0px;
+  border-color:#CBD5E1;
+  border-radius:0px;
+  margin:0px 0px 0px 0px;
+  position: relative;
+  overflow: hidden;
+  width: auto;
+  height: auto;
+}
+.clerk-design-component-PbS7yuoO > div:first-child {
+  box-sizing: border-box;
+  padding: 10px 10px 10px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  gap: 10px;
+}
+@media screen and (max-width: 896px) {
+  .clerk-design-component-PbS7yuoO > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 448px) {
+  .clerk-design-component-PbS7yuoO > div:first-child {
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: start;
+    align-content: start;
+    justify-content: start;
+    gap: 10px;
+  }
+}
+.clerk-design-component-dCF8Lsoy {
+  padding: 6px 16px 6px 16px;
+  background-color: #dbdbdb;
+  font-family: inherit;
+  font-size: 14px;
+  color: #475569;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration:  ;
+  border-style: solid;
+  border-radius:10px;
+  border-width:0px;
+  border-color:#CBD5E1;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  width: auto;
+  height: auto;
+  margin: 0px 0px 0px 0px;
+}
+.clerk-design-component-dCF8Lsoy:focus {
+  outline: none;
+}

@@ -1,0 +1,367 @@
+// clerk filter Design Html
+<div class="clerk-facets">
+<div class="filterHeader">
+<span>Filter</span>
+<span onclick="toggleFacets()">
+<svg aria-hidden="true" focusable="false" role="presentation" class="icon feather-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+<span>
+</div>
+ <div class="filterTiles">
+    {% for facet_group in facets %}
+        <div class="clerk-facet-group clerk-facet-{{ facet_group.group }}" data-facet-group="{{ facet_group.group }}">
+            <div class="clerk-facet-group-title cc-accordion-item__title">{{ facet_group.title }}
+            <div class="clerk_clear_filters" onclick="resetGroup(this, event);">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:16pxheight:16px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </div>
+        </div>
+
+            {% if facet_group.type == "range" %}
+                <div class="clerk-range" data-group="{{ facet_group.group}}" data-min="{{ facet_group.min }}" data-max="{{ facet_group.max }}" data-start="{{ facet_group.start }}" data-end="{{ facet_group.end }}" data-step="auto"></div>
+            {% endif %}
+                {% if facet_group.facets.length > 10 %}
+                <input type="text" placeholder="Search {{ facet_group.title }}..." class="clerk-facet-search" />
+                {% endif %}
+            <div class="clerk-facet-group-facets">
+                {% for facet in facet_group.facets %}
+                    
+                    {% assign showName = facet.name %}
+                    
+                {% if facet_group.group == 'instock' %}
+                    {% if facet.value == true %}
+                        {% assign showName = 'In Stock' %}
+                    {% endif %}
+                {% endif %}
+                {% if facet_group.group == 'on_sale' %}
+                    {% if facet.value == true %}
+                        {% assign showName = 'On Sale' %}
+                    {% endif %}
+                {% endif %}
+                    <div 
+                        class="clerk-facet {% if facet.selected %}clerk-facet-selected{% endif %}{% if facet_group.group == 'variant_sizes' or facet_group.group == 'variant_colors' %} removal-marker{% endif %}{% if facet_group.group == 'product_type' %} type-tag-clerk indented{% endif %}" 
+                        data-facet="{{ facet_group.group }}" 
+                        data-value="{{ facet.value }}" 
+                        data-min="{{ facet.min }}" 
+                        data-max="{{ facet.max }}">
+                        <div class="clerk-facet-name">
+                        {{ showName }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    {% endfor %}
+ </div>
+</div>
+<script>
+// Function to toggle display of .clerk-facets overall
+function facetMobileToggle(){
+    var t = document.querySelector('.clerk-facets').style.display,
+        n = document.querySelector('.clerk-facets');
+    if(t == 'none' || t == ''){
+        n.style.display = 'block';
+        facetStateX = true;
+    } else {
+        n.style.display = 'none';
+        facetStateX = false;
+    }
+}
+// Function to reset all selected facets within a group
+function resetGroup(el, event){
+    event.preventDefault();
+    el.parentNode.parentNode.querySelectorAll('.clerk-facet-selected').forEach(function(facet){
+        facet.click()
+    });
+}
+// Facet state object which records which facets are currently supposed to be in use.
+// The state is used to display them as open after filter selection.
+if(!facetStateObj){
+    var facetStateObj = {};
+}
+// Facetstate boolean, used to track facet state for overall facet display.
+// This is necessary due to the toggle facets button being delivered on each render.
+if(!facetStateX){
+    var facetStateX = false;
+} else {
+    document.querySelector('.clerk-facets').style.display = 'block';
+}
+// Loop which binds all titles to click event to make them animated and collapsible
+// Also marks facet state upon interaction.
+var title_toggle = document.querySelectorAll('.clerk-facet-group-title');
+for(i = 0; i < title_toggle.length; i++){
+	title_toggle[i].addEventListener('click', function(event){
+	objkey = this.parentNode.dataset.facetGroup;
+	this.classList.toggle('active');
+	var facetSearch = (this.parentNode.querySelector('.clerk-facet-search')) ? this.parentNode.querySelector('.clerk-facet-search') : null;
+	var facetRange = (this.parentNode.querySelector('.clerk-range')) ? this.parentNode.querySelector('.clerk-range') : null;
+	var container = this.parentNode.querySelector('.clerk-facet-group-facets');
+	if (!container.classList.contains('active')) {
+		facetStateObj[objkey] = true;
+		container.classList.add('active');
+		container.style.height = 'auto';
+		if(facetSearch){
+			facetSearch.style.display = 'inline-block';
+		}
+		if(facetRange){
+			facetRange.style.display = 'block';
+		}
+		var height = container.clientHeight + 'px';
+		container.style.height = '0px';
+		setTimeout(function () {
+			container.style.height = height;
+		}, 0);
+	} else {
+		facetStateObj[objkey] = false;
+		if(facetSearch){
+			facetSearch.style.display = 'none';
+		}
+		if(facetRange){
+			facetRange.style.display = 'none';
+		}
+		container.style.height = '0px';
+		container.addEventListener('transitionend', function () {
+			container.classList.remove('active');
+		}, {
+			once: true
+		});
+	}
+	});
+}
+// Opens active facets as recorded in facet state object on render.
+for(i=0;i<title_toggle.length;i++){
+	if(facetStateObj[title_toggle[i].parentNode.dataset.facetGroup] == true){
+		title_toggle[i].click();
+	}
+}
+// Checks for selected facets on each group in order to display reset button.
+var facetGroups = document.querySelectorAll('.clerk-facet-group-facets');
+for(i=0;i<facetGroups.length;i++){
+    group = facetGroups[i];
+    if(group.querySelectorAll('.clerk-facet-selected').length > 0){
+        group.parentNode.querySelector('.clerk_clear_filters').style.display = 'block';
+    }
+}
+</script>
+
+// clerk filter design css
+.clerk-facets {
+    width: 230px;
+    margin-right: 10px;
+    background: #ffffff;
+}
+.clerk-range {
+    position: relative !important;
+    width: -webkit-fill-available !important;
+    width: -moz-available !important;
+    width: -ms-fill-available !important;
+    width: -o-fill-available !important;
+    height: 2em !important;
+    padding-top: 1.5em !important;
+    margin: 1em 1em 0.5em 1em !important;
+    display: none;
+}
+
+.clerk-range-selected-range {
+    background-color: #333 !important;
+}
+
+.clerk-range-label-right {
+    right: 1em !important;
+}
+
+.clerk-range-label-left {
+    right: 0 !important;
+}
+
+.clerk-range-dot-left {
+    margin-top:2px;
+    width: 1em !important;
+    height: 1em !important;
+}
+
+.clerk-range-dot-right {
+    margin-top:2px;
+    width: 1em !important;
+    height: 1em !important;
+}
+
+.clerk-range-label-left,
+.clerk-range-label-right {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 2px 10px;
+}
+
+.clerk_clear_filters {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 50px;
+    width: 20px;
+    height: 20px;
+    text-transform: lowercase;
+    text-align: center;
+    transform: translateY(-50%);
+    font-size: 0;
+    cursor: pointer;
+}
+
+.clerk-facet-group {}
+
+.clerk-facet-group-title {
+    margin-bottom: 0px;
+    cursor: pointer;
+    font-size: 17px;
+    color: #666666;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    padding: 15px 0 15px 0;
+    text-align: left;
+    border-bottom:1px solid #d3d3d3;
+}
+
+
+.active.clerk-facet-group-title:before {
+    transition: 0.3s ease-in-out;
+    transform: translateY(calc(-50% - 0px)) rotate(0deg);
+}
+
+.clerk-facet-group-facets {
+    overflow: auto;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+    transition: height .5s ease;
+    border-bottom: 1px solid #eee;
+}
+.clerk-facet-group-facets::-webkit-scrollbar {
+  width: 0px;
+}
+.clerk-facet-group-facets:not(.active) {
+    display: none;
+}
+
+.clerk-facet-search {
+    width: 100%;
+    max-width: -webkit-fill-available;
+    max-width: fill-available;
+    max-width: stretch;
+    display: none;
+    margin: 1rem;
+    padding: .6em .8em;
+    border: 1px solid #eee;
+    font-size: .9em;
+}
+
+.clerk-facet-search:focus,
+.clerk-facet-search:focus-within,
+.clerk-facet-search:focus-visible,
+.clerk-facet-search {
+    border: 1px solid #eee;
+    border-width: 0 1px 1px 1px;
+    box-shadow: none;
+    outline: none;
+}
+
+.clerk-facet {
+    clear: both;
+    margin: .4em 0;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.clerk-facet.hidden {
+    display: none;
+}
+
+.clerk-facet-name {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    display: block;
+    padding: 5px 0px;
+    line-height: 1.3;
+    text-align: left;
+    font-size: 16px;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+}
+
+.clerk-facet-name:before {
+    position: relative;
+    top: .2em;
+    display: inline-block;
+    content: '';
+    width: 20px;
+    height: 20px;
+    margin: 0 .5em 0 0;
+    border: 1px solid #ddd;
+    border-radius: 0px;
+    transition: all .1s ease-in-out;
+}
+
+.clerk-facet-selected .clerk-facet-name:before {
+    background: #222;
+    border-color: #222;
+}
+
+.clerk-facet-selected .clerk-facet-name:after {
+    position: absolute;
+    content: "";
+    top: 8px;
+    left: 4px;
+    width: 6px;
+    height: 11px;
+    transform: rotate(45deg);
+    border: solid #fff;
+    border-width: 0 2.3px 2.3px 0;
+}
+
+.clerk-facet-count {
+    float: right;
+    padding-top: .2em;
+    font-size: .9em;
+    color: #95a5a6;
+}
+
+.clerk-facet-selected {
+    font-weight: bold;
+}
+
+.clerk-facet-group>div:not(.clerk-facet-group-title) {
+    padding: 0 10px;
+}
+
+#clerk-facet-mobile-toggle {
+    display: none;
+    max-width: 100%;
+    width: -webkit-fill-available;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #333;
+    border-radius: 2px;
+    background: #333;
+    color: #fff;
+    font-weight: 100;
+    text-transform: uppercase;
+    font-size: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media screen and (max-width: 800px) {
+    #clerk-facet-mobile-toggle {
+        display: block;
+    }
+}

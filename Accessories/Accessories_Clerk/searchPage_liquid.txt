@@ -1,0 +1,130 @@
+<div class="page-width clerk-page-width container" style="padding-top:115px;padding-bottom:50px;"> 
+  <span
+      id="clerk-search"
+      class="clerk"
+      data-template="@search-page"
+      data-target="#clerk-search-results"
+      data-query="{{ search.terms }}"
+      data-facets-attributes='["price","categories","vendor"]'
+      data-facets-titles='{"price":"Price","categories":"Categories","vendor":"Brand"}'
+      data-facets-target="#clerk-search-filters"
+      data-facets-price-prepend="£"
+      data-facets-in-url="false"
+      data-facets-view-more-text="View More"
+      data-facets-searchbox-text="Search for "
+      data-facets-design="227733"> 
+  </span>
+
+  <div id="clerk-show-facets" onclick="toggleFacets()">
+    <svg width="23" height="19" viewBox="0 0 23 19" stroke-width="1.25" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line x1="0.625" y1="4" x2="3.6" y2="4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></line>
+  <line x1="11.1" y1="4" x2="22.375" y2="4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></line>
+  <line x1="0.625" y1="14.7383" x2="11.3" y2="14.7383" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></line>
+  <line x1="18.8" y1="14.7383" x2="22.375" y2="14.7383" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></line>
+  <circle cx="7.45459" cy="4.1709" r="3.375" fill="none" stroke="currentColor"></circle>
+  <circle cx="14.9995" cy="14.9092" r="3.375" fill="none" stroke="currentColor"></circle>
+</svg> Filters</div>
+
+  <div class="clerk_flex_wrap">
+    <div id="clerk-facets-container">
+      <div id="clerk-search-filters"></div>
+    </div>
+    <div id="clerk-search-results"></div>
+  </div>
+
+  <script>
+    function toggleFacets(){
+      el = document.getElementById('clerk-facets-container');
+      el.classList.toggle('active');
+    }
+  </script>
+
+
+  <style>
+    #clerk-show-facets {
+      color: #f08f35;
+      cursor: pointer;
+      font-size: 21px;
+      font-family: Ubuntu, sans-serif;
+      margin-bottom:20px;
+    }
+
+    .clerk-page-width {
+        display: flow-root;
+    }
+
+    #clerk-search-results {
+        width: 80%;
+    }
+   
+    #clerk-show-facets {
+        display: none;
+    }
+    .clerk_flex_wrap {
+        display: flex;
+        flex-direction: row;
+    }
+
+.filterHeader{
+      display:none;
+    }
+
+    @media only screen and (max-width : 800px) {
+    .filterHeader{
+      display:flex !important;
+      justify-content:space-between;
+      align-items: center;
+      border-bottom:1px solid #d3d3d3;
+          padding: 25px 20px;
+    }
+    .filterHeader span:last-child{
+      stroke:#000;
+    }
+    .filterHeader span:first-child{
+      font-size:26px;
+      color: #656565;
+    font-family: "Bree Serif", serif;
+    }
+       .filterHeader span:last-child svg{
+      width:28px;
+      height:28px;
+         stroke-width: 2px;
+    }
+      #clerk-search-filters {
+        width: 100% !important;
+      }
+
+      #clerk-facets-container {
+        opacity:0;
+        top: 0;
+        position:fixed;
+        right:100%;
+        left:-100%;
+        z-index: 111111;
+        transition:all 0.25s ease-out;
+        background: #00000069;
+      }
+      .clerk_flex_wrap > .active {
+        opacity:1 !important;
+        bottom: 0;
+        left: 0 !important;
+        right: 0 !important;
+      }
+      #clerk-show-facets {
+          display: block;
+      }
+      .clerk_flex_wrap {
+        flex-direction: column;
+      }
+      #clerk-search-results {
+          display: block;
+          width: 100%;
+      }
+      .clerk-facets {
+        width: 77%;
+        height: 100vh;
+      }
+    }
+    
+  </style>
+</div>
