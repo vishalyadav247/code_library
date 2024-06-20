@@ -1,3 +1,133 @@
+    {% comment %} <!-- for theme.liquid -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> {% endcomment %}
+
+
+
+
+<style>
+  /* pdp slider css */
+  .thumbnail-slider .slick-track{
+    transform: none !important;
+    overflow-y: scroll;
+    height: 100% !important;
+    overflow-x: hidden;
+  }
+  .slider-item video{
+    width:100%;
+  }
+  .thumbnail-slider .slick-slide{
+    width:80px !important;
+    height:100px;
+    cursor:pointer;
+  }
+  .thumbnail-slider .slick-slide div,
+  .thumbnail-slider .slick-slide div div{
+    display:flex !important;
+    align-items:center;
+    justify-content:center;
+    height: 100% !important; 
+  }
+  .thumbnail-slider .slick-current{
+    border:.1rem solid rgba(var(--color-foreground),.2)!important;
+  }
+   .main-slider .slick-prev,.main-slider .slick-next{
+    z-index:1;
+  }
+  .main-slider, .thumbnail-slider {
+    float: left; 
+  }
+  .main-slider {
+    width: 78%;
+  }
+  .thumbnail-slider {
+    width: 20%;
+    height: 560px;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .main-slider .slick-slide:hover .product__media-icon{
+    opacity:1 ;
+  }
+  .main-slider .slick-slide{
+    cursor:zoom-in;
+  }
+  .main-slider .slick-slide:has(video){
+    cursor:pointer;
+  }
+  .slider-item{
+    width:fit-content;
+  }
+  .slider-item img {
+    width: 100%;
+    display: block;
+  }
+  .favorites-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  .custom_slick_btn.slick-prev:before, .custom_slick_btn.slick-next:before{
+    display:none !important;
+  }
+  .custom_slick_btn.slick-prev, .custom_slick_btn.slick-next{
+    background: #f0f0f0;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+  }
+  .custom_slick_btn.slick-prev{
+    left:0 !important;
+  }
+  .custom_slick_btn.slick-next{
+    right:0 !important;
+  }
+  .thumbnail-slider .slick-list .slick-track::-webkit-scrollbar {
+    width: 7px;
+  }
+  .thumbnail-slider .slick-list .slick-track::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+  .thumbnail-slider .slick-list .slick-track::-webkit-scrollbar-thumb {
+    background:#c292a1; 
+    border-radius: 10px;
+  }
+ .thumbnail-slider .slick-list{
+    height:100% !important;
+  }
+  .videoWrapper{
+    position:relative;
+  }
+  .previewWrapper{
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+  }
+  .playwrapper{
+    width:100px;
+    height:100px;
+  }
+  .product-media-modal__content>*:not(.active), .product__media-list .deferred-media {
+    display:block !important;
+  }
+@media screen and (max-width:1000px){
+  .thumbnail-slider{
+    display:none;
+  }
+  .main-slider {
+    width: 100%;
+  }
+}
+/* pdp slider css end */
+</style>
+
+
 {% comment %}theme-check-disable TemplateLength{% endcomment %}
 {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
 {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
@@ -6,7 +136,6 @@
 {{ 'component-rte.css' | asset_url | stylesheet_tag }}
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 
-{% render 'custom-gradient-color-swatches' %}
 
 <link rel="stylesheet" href="{{ 'component-deferred-media.css' | asset_url }}" media="all">
 
@@ -191,7 +320,7 @@
 
             {%- when 'variant_picker' -%}
               {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
-{% render 'custom-gradient-color-swatches' %}
+
             {%- when 'buy_buttons' -%}
               <div {{ block.shopify_attributes }}>
                 {%- liquid
@@ -299,7 +428,7 @@
               >
                 {% if recommendations.performed and recommendations.products_count > 0 %}
                   <p class="product-form__group-name product-form__group-name--recommend caption-large">
-                    {{ 'products.product.complementary' | t }}
+                    GET THE SAME DESIGN IN {{ product.metafields.custom.complementary_product_stone_type }}
                   </p>
                   {% for recommendation in recommendations.products %}
                     <div class="card-wrapper">
@@ -410,98 +539,48 @@
           data-product-url="{{ shop.url }}{{ product.url }}"
         ></button>
         <!-- Swym Wishlist Plus EPI Button -->
-        <ul class="product__media-list list-unstyled slickslidermobile" role="list">
-          {%- liquid
-            assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src'
-            assign media_count = product.media.size
-          -%}
-
-          {%- if product.selected_or_first_available_variant.featured_media != null -%}
-            {%- assign featured_media = product.selected_or_first_available_variant.featured_media -%}
-            <li
-              class="product__media-item slider__slide{% if featured_media.media_type != 'image' %} product__media-item--full{% endif %}"
-              data-media-id="{{ section.id }}-{{ featured_media.id }}"
-            >
-              {% render 'product-thumbnail',
-                media: featured_media,
-                position: 'featured',
-                loop: section.settings.enable_video_looping,
-                modal_id: section.id,
-                lazy_load: false
-              %}
-            </li>
-          {%- endif -%}
-
-          {%- for media in product.media -%}
-            {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
-              <li
-                class="product__media-item slider__slide{% if media.media_type != 'image' %} product__media-item--full{% endif %} {% if variant_images contains media.src %} product__media-item--variant{% endif %}"
-                data-media-id="{{ section.id }}-{{ media.id }}"
-              >
-                {% render 'product-thumbnail',
-                  media: media,
-                  position: forloop.index,
-                  loop: section.settings.enable_video_looping,
-                  modal_id: section.id,
-                  lazy_load: false
-                %}
-                
-              </li>
-            {%- endunless -%}
-          {%- endfor -%}
-        </ul>
-
-        <ul class="product__media-sublist thumbnailslider" role="list">
-          {%- if product.selected_or_first_available_variant.featured_media != null -%}
-            {%- assign featured_media = product.selected_or_first_available_variant.featured_media -%}
-            <li
-              class="product__media-subitem slider__slide"
-              data-media-sub-id="{{ section.id }}-{{ featured_media.id }}"
-            >
-              <div class="product__media">
-                <img
-                  srcset="
-                    {% if featured_media.preview_image.width >= 70 %}{{ featured_media.preview_image | img_url: '70x' }} 70w,{% endif %}
-                    {% if featured_media.preview_image.width >= 140 %}{{ featured_media.preview_image | img_url: '140x' }} 140w,{% endif %}
-                  "
-                  src="{{ featured_media | img_url: '70x70' }}"
-                  loading="lazy"
-                  width="70"
-                  height="{{ 70 | divided_by: featured_media.preview_image.aspect_ratio | ceil }}"
-                  alt="{{ featured_media.preview_image.alt | escape }}"
-                >
+       
+        <!-- pdp slider -->
+        <div style="position:relative;width:100%;gap: 33px;display: flex;">
+          
+          <!-- Main Image and Video Slider -->
+          <div class="main-slider">
+            {% for media in product.media %}
+              <div class="slider-item">
+                {% if media.media_type == 'image' %}
+                  <img src="{{ media.src | img_url: 'master' }}" alt="{{ product.title }}">
+                  <span class="product__media-icon motion-reduce" aria-hidden="true"><svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-plus" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12zM7 7V5h2v2h2v2H9v2H7V9H5V7h2z" fill="currentColor"></path></svg></span>
+                {% elsif media.media_type == 'video' or media.media_type == 'external_video' %}
+                  <div class='videoWrapper'>
+                    <video controls>
+                      <source src="{{ media.sources[1].url }}" type="{{ media.sources[1].mime_type }}">
+                    </video>
+                    <div class='previewWrapper'>
+                        <img src="{{ media.preview_image.src | img_url: '550x550' }}" alt="Video Thumbnail"> <!-- Optionally, use a specific thumbnail if available -->              
+                        <span class="deferred-media__poster-button motion-reduce"><span class="visually-hidden">Play video</span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" class="icon icon-play" fill="none" viewBox="0 0 10 14"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.48177 0.814643C0.81532 0.448245 0 0.930414 0 1.69094V12.2081C0 12.991 0.858787 13.4702 1.52503 13.0592L10.5398 7.49813C11.1918 7.09588 11.1679 6.13985 10.4965 5.77075L1.48177 0.814643Z" fill="currentColor"></path></svg></span>
+                    </div>
+                  </div>
+                {% endif %}
               </div>
-            </li>
-          {%- endif -%}
-
-          {%- for media in product.media -%}
-            {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
-              <li
-                class="product__media-subitem slider__slide {% if variant_images contains media.src %} product__media-item--variant{% endif %}"
-                data-media-sub-id="{{ section.id }}-{{ media.id }}"
-              >
-                <div class="product__media">
-                  <img
-                    srcset="
-                      {% if media.preview_image.width >= 288 %}{{ media.preview_image | img_url: '288x' }} 288w,{% endif %}
-                      {% if media.preview_image.width >= 576 %}{{ media.preview_image | img_url: '576x' }} 576w,{% endif %}
-                       {% if media.preview_image.width >= 400 %}{{ media.preview_image | img_url: '400x' }} 400w,{% endif %}
-                         				{% if media.preview_image.width >= 500 %}{{ media.preview_image | img_url: '500x' }} 500w,{% endif %}
-                      {% if media.preview_image.width >= 550 %}{{ media.preview_image | img_url: '550x' }} 550w,{% endif %}
-                      {% if media.preview_image.width >= 1100 %}{{ media.preview_image | img_url: '1100x' }} 1100w{% endif %}
-                    "
-                    src="{{ media | img_url: '550x550' }}"
-                    sizes="(min-width: 1200px) calc((1200px - 10rem) / 2), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)"
-                    loading="lazy"
-                    width="576"
-                    height="{{ 576 | divided_by: media.preview_image.aspect_ratio | ceil }}"
-                    alt="{{ media.preview_image.alt | escape }}"
-                  >
-                </div>
-              </li>
-            {%- endunless -%}
-          {%- endfor -%}
-        </ul>
+            {% endfor %}
+          </div>
+        
+          <!-- Thumbnail Slider -->
+          <div class="thumbnail-slider">
+            {% for media in product.media %}
+              <div class="slider-item">
+                {% if media.media_type == 'image' %}
+                  <img src="{{ media.src | img_url: '550x550' }}" alt="{{ product.title }}">
+                {% elsif media.media_type == 'video' or media.media_type == 'external_video' %}
+                  <img src="{{ media.preview_image.src | img_url: '550x550' }}" alt="Video Thumbnail"> <!-- Optionally, use a specific thumbnail if available -->
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+          
+        </div>
+        <!-- pdp slider end -->
+     
       </div>
       {%- if first_3d_model -%}
         <button
@@ -662,67 +741,6 @@
   <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
 {% endif %}
-<style>
-  .thumbnailslider  ul.slick-dots{
-  display: none !important;
-  }
-  .thumbnailslider.slick-vertical .product__media-subitem img{
-  cursor: pointer!important;
-  }
-</style>
-{% javascript %}
-class ProductModal extends ModalDialog {
-constructor() {
-super();
-}
-
-hide() {
-super.hide();
-window.pauseAllMedia();
-}
-
-show(opener) {
-super.show(opener);
-this.showActiveMedia();
-}
-
-showActiveMedia() {
-this.querySelectorAll(`[data-media-id]:not([data-media-id="${this.openedBy.getAttribute("data-media-id")}"])`).forEach((element) => {
-element.classList.remove('active');
-}
-)
-const activeMedia = this.querySelector(`[data-media-id="${this.openedBy.getAttribute("data-media-id")}"]`);
-activeMedia.classList.add('active');
-activeMedia.scrollIntoView();
-
-if (activeMedia.nodeName == 'DEFERRED-MEDIA' && activeMedia.querySelector('template')?.content?.querySelector('.js-youtube'))
-activeMedia.loadContent();
-}
-}
-
-customElements.define('product-modal', ProductModal);
-
-jQuery(document).ready(function($) {
-    $('.product__media-list').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        prevArrow: '<button class="custom_slick_btn slick-prev slick-arrow" style="color:#333;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"style="height:30px;width:30px"><path d="M0-.25H24v24H0Z" transform="translate(0 0.25)" style="fill:none"></path><polyline points="14.4 7.03 9 12.43 14.4 17.83" style="fill:none;stroke:currentColor;stroke-linecap:round;stroke-miterlimit:8;stroke-width:2px"></polyline></svg></button>',
-        nextArrow: '<button class="custom_slick_btn slick-next slick-arrow" style="color:#333;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="height:30px;width:30px"><path d="M0-.25H24v24H0Z" transform="translate(0 0.25)" style="fill:none"></path><polyline points="10 17.83 15.4 12.43 10 7.03" style="fill:none;stroke:currentColor;stroke-linecap:round;stroke-miterlimit:8;stroke-width:2px"></polyline></svg></button>'
-    });
-
-    $('.thumbnailslider').slick({
-        slidesToShow: 10,
-      speed:1300,
-        vertical: true,
-        arrows: false,
-        slidesToScroll: 1,
-        asNavFor: '.product__media-list',
-        dots: true,
-        centerMode: true,
-        focusOnSelect: true
-    });
-});
-{% endjavascript %}
 
 {%- if first_3d_model -%}
   <script type="application/json" id="ProductJSON-{{ product.id }}">
@@ -964,35 +982,79 @@ jQuery(document).ready(function($) {
 }
 {% endschema %}
 
+
+                  
+<!-- pdp slider -->
 <script>
-document.addEventListener('DOMContentLoaded', function () { 
-  var switches = document.querySelectorAll('.product-form__controls-group input');
-  switches.forEach((element) => {
-      element.addEventListener('click', () => {
-        let ad = element.getAttribute("data-variant-image-src");
-        if(ad){
-          let slides = document.querySelectorAll('.product__media-list .slick-slide .product__media img');
-          for (let image of slides) {
-              if (image.src.includes(ad)) {
-                  let req = image.parentNode.parentNode.parentNode.parentNode.parentNode;
-                  req.classList.add("slick-active");
-                  req.classList.add("slick-current");
-                  req.setAttribute("aria-hidden", "false");
-                  req.setAttribute("tabindex", "0");
-                  let track = image.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-                  let res = (parseInt(req.getAttribute("data-slick-index")) + 1) * 493;
-                  track.style.transform = `translate3d(-${res}px, 0px, 0px)`;
-                  break;
-              } else {
-                  let req = image.parentNode.parentNode.parentNode.parentNode.parentNode;
-                  req.classList.remove("slick-active");
-                  req.classList.remove("slick-current");
-                  req.setAttribute("aria-hidden", "true");
-                  req.setAttribute("tabindex", "-1");
-              }
-          } 
-        }       
+$(document).ready(function() {
+  console.log('ready')
+  $('.main-slider').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    asNavFor: '.thumbnail-slider',
+    fade: true,
+    prevArrow: '<button class="custom_slick_btn slick-prev slick-arrow" style="color: rgb(51, 51, 51);" aria-label="Previous slide"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="height:30px;width:30px"><path d="M0-.25H24v24H0Z" transform="translate(0 0.25)" style="fill:none"></path><polyline points="14.4 7.03 9 12.43 14.4 17.83" style="fill:none;stroke:currentColor;stroke-linecap:round;stroke-miterlimit:8;stroke-width:2px"></polyline></svg></button>',
+    nextArrow: '<button class="custom_slick_btn slick-next slick-arrow" style="color: rgb(51, 51, 51);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="height:30px;width:30px"><path d="M0-.25H24v24H0Z" transform="translate(0 0.25)" style="fill:none"></path><polyline points="10 17.83 15.4 12.43 10 7.03" style="fill:none;stroke:currentColor;stroke-linecap:round;stroke-miterlimit:8;stroke-width:2px"></polyline></svg></button>'
+  });
+
+  $('.thumbnail-slider').slick({
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    arrows: false,
+    infinite: false,
+    asNavFor: '.main-slider',
+    dots: false,
+    centerMode: false,
+    focusOnSelect:true,
+    vertical: true,
+    verticalSwiping: false,
+  });
+
+    var defaultColorValue = $('.product-form__colors-wrapper input[type="radio"]:checked').each(sli);
+    $('.product-form__colors-wrapper input[type="radio"]').on('click', sli);
+  
+    function sli() {
+      console.log('in function')
+      var colorValue = $(this).val(); 
+      document.querySelector('.product-form__colors-wrapper .product-form__input .form__label').innerText = `COLOR : ${colorValue}`
+      var imageSrc = $(this).data('variant-image-src');
+      var index = $('.thumbnail-slider .slick-slide:not(.slick-cloned) img').filter(function() {
+        var src = $(this).attr('src')
+        if(src === imageSrc){
+          return src === imageSrc;
+        }else{
+          console.log('no image found')
+        }     
+      }).closest('.slick-slide').data('slick-index');
+  
+      // If index found, go to that slide in both sliders
+      if(index !== undefined) {
+        $('.main-slider').slick('slickGoTo', index);
+        $('.thumbnail-slider').slick('slickGoTo', index);
+      } else {
+        console.log("Matching image not found in the slider for src:", imageSrc);
+      }
+    }
+  
+    function openModel(){
+      $('.product-media-modal').css({'visibility': 'visible', 'opacity': '1', 'z-index' : '1111'})
+    }
+  
+    function closeModel(){
+      $('.product-media-modal').css({'visibility': 'hidden', 'opacity': '0','z-index': '-1'})
+    }
+  
+    let c = $('.main-slider .slick-slide:has(.slider-item > img)').click(openModel)
+    $('.product-media-modal__toggle').click(closeModel)
+    let previewWrapper = document.querySelectorAll('.previewWrapper');
+    Array.from(previewWrapper).forEach((element)=>{
+      element.addEventListener('click',function(event){
+        event.stopPropagation();
+        element.style.display = 'none';
+        element.previousElementSibling.play();
       })
-  })
-});
+    })
+
+  });
 </script>

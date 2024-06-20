@@ -100,7 +100,7 @@
 			{% if variant_link %}
 				data-variant-link="{{ variant_link }}"
 			{% endif %}
-            {% if variant_image_src %}
+          {% if variant_image_src %}
 				data-variant-image-src="{{ variant_image_src }}"
 			{% endif %}
 			{% if no_form_id != true %}
@@ -113,7 +113,7 @@
 				class="disabled"
 			{% endif %}
 		>
-		<label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ product.id }}" class="color-swatch"
+		<label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ product.id }}" class="color-swatch gradient g{{ forloop.index }} "
         style="--swatch-color: {{ color_value_custom | remove: '-' }};  border-radius: {{ settings.swatch_border_radius }}px"
 >
 			<span class="visually-hidden">{{ value -}}</span>
