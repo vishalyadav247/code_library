@@ -1,0 +1,97 @@
+               <style>
+.icon-container {
+    display: flex;
+    align-items: center;
+    background-color: #f6f6f6;
+    border-radius: 30px;
+    margin-top: 15px;
+}
+.icon {
+  width: 30px; /* Adjust the width of your icon */
+  height: 30px; /* Adjust the height of your icon */
+  margin-right: 5px; /* Adjust the spacing between the icon and text */
+}
+.text {
+  font-size: 13px; /* Adjust the font size of your text */
+}
+#countdown-timer {
+  margin: 0px 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f5a201;
+}
+@media (max-width: 520px) {
+  .icon-container {
+    margin: 0;
+  }
+}
+</style>
+
+<div class="icon-container">
+  <img src="https://cdn.shopify.com/s/files/1/0571/2288/1736/files/timer-grey_1.webp?v=1721380919" class="icon">
+  <span class="text">Order in</span>
+  <div id="countdown-timer"></div>
+  <span id="dispatch-text"></span> <!-- Dynamically updated dispatch text -->
+</div>
+
+<script>
+  function getFixedUKTime() {
+    var now = new Date();
+    var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    var ukTime = new Date(utc + (3600000)); // UK is GMT+1
+    return ukTime;
+  }
+
+  function isHoliday(date) {
+    const holidays = ['2024-08-26', '2024-12-25', '2024-12-26','2025-01-01', '2025-04-18', '2025-04-21','2025-05-05', '2025-05-26', '2025-08-25']; // Update this list as needed
+    const dateString = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+    return holidays.includes(dateString);
+  }
+
+  function updateCountdown() {
+    var now = getFixedUKTime();
+    // var now = new Date('2024-08-02T14:01:00');
+    var targetTime = new Date(now.toISOString().split('T')[0]); // Resets to today's date at 00:00
+    targetTime.setHours(15, 0, 0, 0); // Sets target time to 3:00 PM exactly, with no residual minutes or seconds
+
+    // Adjust for weekends or holidays
+    while (targetTime.getDay() === 0 || targetTime.getDay() === 6 || isHoliday(targetTime)) {
+      targetTime.setDate(targetTime.getDate() + 1);
+    }
+
+    var dispatchText = document.getElementById('dispatch-text');
+    if (now.getHours() >= 15 && now.getDate() === targetTime.getDate()) {
+      // After 3 PM and dispatch date is today, move to next dispatch date
+      targetTime.setDate(targetTime.getDate() + 1);
+      targetTime.setHours(15, 0, 0, 0); // Reset time to 3:00 PM again for the new date
+      while (targetTime.getDay() === 0 || targetTime.getDay() === 6 || isHoliday(targetTime)) {
+        targetTime.setDate(targetTime.getDate() + 1);
+      }
+    }
+
+    // Days of the week array to convert day number to name
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var dayName = daysOfWeek[targetTime.getDay()];
+
+    if (targetTime.getDate() === now.getDate()) {
+      dispatchText.innerHTML = 'for dispatch today';
+    } else {
+      dispatchText.innerHTML = 'for dispatch on ' + dayName;
+    }
+
+    // Calculate countdown
+    var timeDifference = targetTime - now;
+    if (timeDifference > 0) {
+      var hours = Math.floor(timeDifference / (3600000));
+      var minutes = Math.floor((timeDifference % (3600000)) / 60000);
+      var seconds = Math.floor((timeDifference % 60000) / 1000);
+      document.getElementById('countdown-timer').innerHTML = hours + 'h ' + minutes + 'm ' + seconds + 's';
+    } else {
+      setTimeout(updateCountdown, 1000);
+    }
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown(); // Initial call to start the countdown and set dispatch text
+</script>
+

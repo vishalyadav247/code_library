@@ -1,0 +1,37 @@
+{% capture variants_inventory %}
+  [
+    {% for variant in product.variants %}
+      { "variantId" : "{{ variant.id }}",
+        "inventory": "{{ variant.inventory_quantity | default: 'Not available' }}"
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+{% endcapture %}
+
+<script>
+var variantList = JSON.parse({{ variants_inventory | json }})
+let ev = document.querySelectorAll('.product-details .option-selectors select');
+ev.forEach((element)=>{
+  element.addEventListener('change',run);
+})
+run()
+function run() {
+  setTimeout(()=>{
+    let urlString = window.location.href;
+    var url = new URL(urlString);
+    var variantID = url.searchParams.get('variant');
+    console.log('vID',variantID)
+    for(let item of variantList){
+      if(item.variantId == variantID){
+        if(item.inventory == 0){
+          document.querySelector('.countdown-ad').style.display = 'none';
+        }else{
+          document.querySelector('.countdown-ad').style.display = 'block';
+        }
+      }
+    }
+    
+});
+
+}
+</script>
