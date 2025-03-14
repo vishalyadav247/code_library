@@ -1,0 +1,124 @@
+[{
+  "_id": {
+    "$oid": "675820ffaa6f6f922973cbd6"
+  },
+  "name": "Product Type",
+  "options": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67582105aa6f6f922973cbda"
+  },
+  "name": "Compound",
+  "options": [
+    {
+      "subCategory": "ultimax",
+      "labelBg": "#000000",
+      "labelText": "",
+      "labelImage": null
+    },
+    {
+      "subCategory": "greenstuff",
+      "labelBg": "#53b105",
+      "labelText": "",
+      "labelImage": null
+    },
+    {
+      "subCategory": "yellowstuff",
+      "labelBg": "#f4d500",
+      "labelText": "",
+      "labelImage": null
+    },
+    {
+      "subCategory": "redstuff",
+      "labelBg": "#dc2c28",
+      "labelText": "",
+      "labelImage": null
+    },
+    {
+      "subCategory": "bluestuff",
+      "labelBg": "#004cb7",
+      "labelText": "",
+      "labelImage": null
+    },
+    {
+      "subCategory": "ED Heavy Duty",
+      "labelBg": "#d9d9d9",
+      "labelText": "ED Heavy Duty",
+      "labelImage": null
+    },
+    {
+      "subCategory": "RP-1 Race Pads",
+      "labelBg": "#d9d9d9",
+      "labelText": "RP-1",
+      "labelImage": null
+    },
+    {
+      "subCategory": "RP-X Race Pads",
+      "labelBg": "#d9d9d9",
+      "labelText": "RP-X",
+      "labelImage": null
+    },
+    {
+      "subCategory": "SR21 Race Pads",
+      "labelBg": "#d9d9d9",
+      "labelText": "SR21",
+      "labelImage": null
+    },
+    {
+      "subCategory": "SR11 Race Pads",
+      "labelBg": "#d9d9d9",
+      "labelText": "SR11",
+      "labelImage": null
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6758210faa6f6f922973cbde"
+  },
+  "name": "Disc Type",
+  "options": [
+    {
+      "subCategory": "Standard Discs",
+      "labelBg": "#ffffff",
+      "labelText": "",
+      "labelImage": "/uploads/images/1733829423965_brake-disc (5) 1.png"
+    },
+    {
+      "subCategory": "USR Grooved Discs",
+      "labelBg": "#ffffff",
+      "labelText": "",
+      "labelImage": "/uploads/images/1733829470551_brake-disc (5) 1.png"
+    },
+    {
+      "subCategory": "GD Turbo Grooved Discs",
+      "labelBg": "#ffffff",
+      "labelText": "",
+      "labelImage": "/uploads/images/1733829452581_brake-disc (5) 1.png"
+    },
+    {
+      "subCategory": "2-PC Floating Discs",
+      "labelBg": "#ffffff",
+      "labelText": "",
+      "labelImage": "/uploads/images/1733829503200_brake-disc (5) 1.png"
+    },
+    {
+      "subCategory": "BSD Grooved Discs",
+      "labelBg": "#ffffff",
+      "labelText": "",
+      "labelImage": "/uploads/images/1733829486565_brake-disc (5) 1.png"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67582119aa6f6f922973cbe2"
+  },
+  "name": "Accessories",
+  "options": [],
+  "__v": 0
+}]
